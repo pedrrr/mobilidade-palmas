@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="/style.css">
+    <script src="/script-third.js" defer></script>
+</head>
+<body>
+    <header><img src="screenshot_30.png" alt=""></header>
+    <main>
+
+        <div class="main-div">
+            <h3>Sobre seu trabalho</h3>
+            <form action="/third-page" method="POST">
+            <% if(data) { %>
+                <div class="container">
+                    <div class="input">
+                        <label for="empregador">Em qual empresa você trabalha?</label>
+                        <select name="empregador" id="empregador">
+                            <option value="" hidden>- Selecione -</option>
+                            <% for (const empresa of empresas){ %>
+                                <option value="<%= empresa.id_empresa %>" <% if(data.setor_ocupacao === empresa.id_empresa){%> selected <% } %>><%= empresa.nome %></option>
+                            <% } %>
+                        </select>
+                    </div class="input">
+    
+                    <div class="input">
+                        <label for="localTrabalho" class="input-municip">Onde você trabalha</label>
+                        <select name="localTrabalho" id="localTrabalho">
+                        <option value="" disabled hidden> - Selecione - </option>
+                        <% for (const municipio of municipios){ %>
+                            <option value="<%= municipio.id_municipio %>" <% if(data.id_municipio_trabalha === municipio.id_municipio){%> selected <% } %>><%= municipio.nome %></option>
+                           <% } %>
+                        </select>
+                    </div>
+    
+                    <div class="input quadra-input" id="quadra-div-trabalho">
+                        <label for="quadraTrabalho">Quadra</label>
+                        <select type="text" name="quadraTrabalho" id="quadraTrabalho">
+                            <option value="" hidden>- Selecione -</option>
+                            <option value="null" hidden></option>
+                            <% for (const quadra of quadras){ %>
+                                <option value="<%= quadra.id_quadra %>" <% if(data.id_quadra_trabalha === quadra.id_quadra){%> selected <% } %>><%= quadra.nome %></option>
+                            <% } %>
+                        </select>
+                    </div>
+    
+                    <div class="input">
+                        <label for="paraTrabalho">De onde você sai para ir ao trabalho?</label>
+                        
+                        <input type="radio" name="paraTrabalho" id="casa" value="CASA" <% if(data.origem_trabalho === 'CASA'){ %> checked <% } %>>
+                        <label for="casa">de casa</label>
+                        <input type="radio" name="paraTrabalho" id="escola" value="ESCO" <% if(data.origem_trabalho === 'ESCO'){ %> checked <% } %>>
+                        <label for="escola">da escola</label>
+                        <input type="radio" name="paraTrabalho" id="outros" value="OUTR" <% if(data.origem_trabalho === 'OUTR'){ %> checked <% } %>>
+                        <label for="outros">outros</label>
+                    </div class="input">
+    
+                    <div class="input">
+                        <label for="modoTrabalho">Como você vai para o trabalho?</label>
+                        <select name="modoTrabalho" id="modoTrabalho">
+                            <option value="OMU" <% if(data.modo_vai_trabalho === 'OMU'){ %> selected <% } %>>Ônibus municipal de Palmas</option>
+                            <option value="OIN" <% if(data.modo_vai_trabalho === 'OIN'){ %> selected <% } %>>Ônibus intermunicipal</option>
+                            <option value="OFR" <% if(data.modo_vai_trabalho === 'OFR'){ %> selected <% } %>>Ônibus/van fretamento</option>
+                            <option value="ACD" <% if(data.modo_vai_trabalho === 'ACD'){ %> selected <% } %>>Automóvel particular (condutor)</option>
+                            <option value="APS" <% if(data.modo_vai_trabalho === 'APS'){ %> selected <% } %>>Automóvel particular (passageiro)</option>
+                            <option value="MCD" <% if(data.modo_vai_trabalho === 'MCD'){ %> selected <% } %>>Moto particular (condutor)</option>
+                            <option value="MPS" <% if(data.modo_vai_trabalho === 'MPS'){ %> selected <% } %>>Moto particular (passageiro)</option>
+                            <option value="TXA" <% if(data.modo_vai_trabalho === 'TXA'){ %> selected <% } %>>Taxi / aplicativo</option>
+                            <option value="BIC" <% if(data.modo_vai_trabalho === 'BIC'){ %> selected <% } %>>Bicicleta</option>
+                            <option value="APE" <% if(data.modo_vai_trabalho === 'APE'){ %> selected <% } %>>A pé</option>
+                        </select>
+                    </div>
+    
+                    <div class="input">
+                        <label for="tempoModoTrabalho">Quanto tempo você gasta para chegar ao trabalho?</label>
+                        <select name="tempoModoTrabalho" id="tempoModoTrabalho">
+                            <option value="ATE_15" <% if(data.tempo_ida_trabalho === 'ATE_15'){ %> selected <% } %>>Menos de 15 minutos</option>
+                            <option value="ATE_30" <% if(data.tempo_ida_trabalho === 'ATE_30'){ %> selected <% } %>>De 15 a 30 minutos</option>
+                            <option value="ATE_45" <% if(data.tempo_ida_trabalho === 'ATE_45'){ %> selected <% } %>>De 30 a 45 minutos</option>
+                            <option value="ATE_60" <% if(data.tempo_ida_trabalho === 'ATE_60'){ %> selected <% } %>>De 45 minutos a 1 hora</option>
+                            <option value="MAIS_60" <% if(data.tempo_ida_trabalho === 'MAIS_60'){ %> selected <% } %>>Mais de 1 hora</option>
+                        </select>
+                    </div>
+    
+                    <div class="input">
+                        <label for="horasInicioTrabalho">A que horas você começa a trabalhar?</label>
+                        <input type="time" name="horasInicioTrabalho" id="horasInicioTrabalho" value="<%= data.hora_comeca_trabalho %>">
+                    </div>
+    
+                    <div class="input">
+                        <label for="horasFimTrabalho">A que horas você sai do trabalho?</label>
+                        <input type="time" name="horasFimTrabalho" id="horasFimTrabalho" value="<%= data.hora_encerra_trabalho %>">
+                    </div>
+    
+                    <div class="input">
+                        <label for="saidaTrabalho">Para onde você vai quando sai do trabalho?</label>
+                        
+                        <input type="radio" name="saidaTrabalho" id="casa" value="CASA" <% if(data.destino_trabalho === 'CASA'){ %> checked <% } %>>
+                        <label for="casa">para casa</label>
+                        <input type="radio" name="saidaTrabalho" id="trabalho" value="TRAB" <% if(data.destino_trabalho === 'TRAB'){ %> checked <% } %>>
+                        <label for="trabalho">para a escola</label>
+                        <input type="radio" name="saidaTrabalho" id="outros" value="OUTR" <% if(data.destino_trabalho === 'OUTR'){ %> checked <% } %>>
+                        <label for="oturos">outros</label>
+                    </div>
+    
+                    <div class="input">
+                        <label for="modoSaidaTrabalho">Como você vai do trabalho para casa/escola/outros</label>
+                        <select name="modoSaidaTrabalho" id="modoSaidaTrabalho">
+                            <option value="OMU" <% if(data.modo_sai_trabalho === 'OMU'){ %> selected <% } %>>Ônibus municipal de Palmas</option>
+                            <option value="OIN" <% if(data.modo_sai_trabalho === 'OIN'){ %> selected <% } %>>Ônibus intermunicipal</option>
+                            <option value="OFR" <% if(data.modo_sai_trabalho === 'OFR'){ %> selected <% } %>>Ônibus/van fretamento</option>
+                            <option value="ACD" <% if(data.modo_sai_trabalho === 'ACD'){ %> selected <% } %>>Automóvel particular (condutor)</option>
+                            <option value="APS" <% if(data.modo_sai_trabalho === 'APS'){ %> selected <% } %>>Automóvel particular (passageiro)</option>
+                            <option value="MCD" <% if(data.modo_sai_trabalho === 'MCD'){ %> selected <% } %>>Moto particular (condutor)</option>
+                            <option value="MPS" <% if(data.modo_sai_trabalho === 'MPS'){ %> selected <% } %>>Moto particular (passageiro)</option>
+                            <option value="TXA" <% if(data.modo_sai_trabalho === 'TXA'){ %> selected <% } %>>Taxi / aplicativo</option>
+                            <option value="BIC" <% if(data.modo_sai_trabalho === 'BIC'){ %> selected <% } %>>Bicicleta</option>
+                            <option value="APE" <% if(data.modo_sai_trabalho === 'APE'){ %> selected <% } %>>A pé</option>
+                        </select>
+                    </div>
+    
+                    <div class="input">
+                        <label for="tempoModoSaidaTrabalho">Quanto tempo você gasta para chegar no destino</label>
+                        <select name="tempoModoSaidaTrabalho" id="tempoModoSaidaTrabalho">
+                            <option value="ATE_15" <% if(data.tempo_volta_trabalho === 'ATE_15'){ %> selected <% } %>>Menos de 15 minutos</option>
+                            <option value="ATE_30" <% if(data.tempo_volta_trabalho === 'ATE_30'){ %> selected <% } %>>De 15 a 30 minutos</option>
+                            <option value="ATE_45" <% if(data.tempo_volta_trabalho === 'ATE_45'){ %> selected <% } %>>De 30 a 45 minutos</option>
+                            <option value="ATE_60" <% if(data.tempo_volta_trabalho === 'ATE_60'){ %> selected <% } %>>De 45 minutos a 1 hora</option>
+                            <option value="MAIS_60" <% if(data.tempo_volta_trabalho === 'MAIS_60'){ %> selected <% } %>>Mais de 1 hora</option>
+                        </select>
+                    </div>
+                </div>
+            <% } %>
+            <% if(!data) { %>
+            <div class="container">
+                <div class="input">
+                    <label for="empregador">Em qual empresa você trabalha?</label>
+                    <select name="empregador" id="empregador">
+                        <option value="" selected disabled hidden> - Selecione - </option>
+                    <% for (const empresa of empresas){ %>
+                        <option value="<%= empresa.id_empresa %>"><%= empresa.nome %></option>
+                       <% } %>
+                    </select>
+                </div class="input">
+
+                <div class="input">
+                    <label for="localTrabalho">Onde você trabalha</label>
+                    <select name="localTrabalho" id="localTrabalho">
+                    <option value="" selected disabled hidden> - Selecione - </option>
+                    <% for (const municipio of municipios){ %>
+                        <option value="<%= municipio.id_municipio %>"><%= municipio.nome %></option>
+                       <% } %>
+                    </select>
+                </div>
+
+                <div class="input quadra-input" id="quadra-div-trabalho">
+                    <label for="quadraTrabalho">Quadra</label>
+                    <select type="text" name="quadraTrabalho" id="quadraTrabalho">
+                        <option value="" hidden>- Selecione -</option>
+                        <option value="null" hidden></option>
+                        <% for (const quadra of quadras){ %>
+                        <option value="<%= quadra.id_quadra %>"><%= quadra.nome %></option>
+                        <% } %>
+                    </select>
+                </div>
+
+                <div class="input">
+                    <label for="paraTrabalho">De onde você sai para ir ao trabalho?</label>
+                    
+                    <input type="radio" name="paraTrabalho" id="casa" value="CASA">
+                    <label for="casa">de casa</label>
+                    <input type="radio" name="paraTrabalho" id="escola" value="TRAB">
+                    <label for="escola">da escola</label>
+                    <input type="radio" name="paraTrabalho" id="outros" value="OUTR">
+                    <label for="outros">outros</label>
+                </div class="input">
+
+                <div class="input">
+                    <label for="modoTrabalho">Como você vai para o trabalho?</label>
+                    <select name="modoTrabalho" id="modoTrabalho">
+                        <option value="OMU">Ônibus municipal de Palmas</option>
+                        <option value="OIN">Ônibus intermunicipal</option>
+                        <option value="OFR">Ônibus/van fretamento</option>
+                        <option value="ACD">Automóvel particular (condutor)</option>
+                        <option value="APS">Automóvel particular (passageiro)</option>
+                        <option value="MCD">Moto particular (condutor)</option>
+                        <option value="MPS">Moto particular (passageiro)</option>
+                        <option value="TXA">Taxi / aplicativo</option>
+                        <option value="BIC">Bicicleta</option>
+                        <option value="APE">A pé</option>
+                    </select>
+                </div>
+
+                <div class="input">
+                    <label for="tempoModoTrabalho">Quanto tempo você gasta para chegar ao trabalho?</label>
+                    <select name="tempoModoTrabalho" id="tempoModoTrabalho">
+                        <option value="ATE_15">Menos de 15 minutos</option>
+                        <option value="ATE_30">De 15 a 30 minutos</option>
+                        <option value="ATE_45">De 30 a 45 minutos</option>
+                        <option value="ATE_60">De 45 minutos a 1 hora</option>
+                        <option value="MAIS_60">Mais de 1 hora</option>
+                    </select>
+                </div>
+
+                <div class="input">
+                    <label for="horasInicioTrabalho">A que horas você começa a trabalhar?</label>
+                    <input type="time" name="horasInicioTrabalho" id="horasInicioTrabalho">
+                </div>
+
+                <div class="input">
+                    <label for="horasFimTrabalho">A que horas você sai do trabalho?</label>
+                    <input type="time" name="horasFimTrabalho" id="horasFimTrabalho">
+                </div>
+
+                <div class="input">
+                    <label for="saidaTrabalho">Para onde você vai quando sai do trabalho?</label>
+                    
+                    <input type="radio" name="saidaTrabalho" id="casa" value="CASA">
+                    <label for="casa">para casa</label>
+                    <input type="radio" name="saidaTrabalho" id="trabalho" value="TRAB">
+                    <label for="trabalho">para a escola</label>
+                    <input type="radio" name="saidaTrabalho" id="outros" value="OUTR">
+                    <label for="oturos">outros</label>
+                </div>
+
+                <div class="input">
+                    <label for="modoSaidaTrabalho">Como você vai do trabalho para casa/escola/outros</label>
+                    <select name="modoSaidaTrabalho" id="modoSaidaTrabalho">
+                        <option value="OMU">Ônibus municipal de Palmas</option>
+                        <option value="OIN">Ônibus intermunicipal</option>
+                        <option value="OFR">Ônibus/van fretamento</option>
+                        <option value="ESC">Ônibus/van escolar</option>
+                        <option value="ACD">Automóvel particular (condutor)</option>
+                        <option value="APS">Automóvel particular (passageiro)</option>
+                        <option value="MCD">Moto particular (condutor)</option>
+                        <option value="MPS">Moto particular (passageiro)</option>
+                        <option value="TXA">Taxi / aplicativo</option>
+                        <option value="BIC">Bicicleta</option>
+                        <option value="APE">A pé</option>
+                    </select>
+                </div>
+
+                <div class="input">
+                    <label for="tempoModoSaidaTrabalho">Quanto tempo você gasta para chegar no destino</label>
+                    <select name="tempoModoSaidaTrabalho" id="tempoModoSaidaTrabalho">
+                        <option value="ATE_15">Menos de 15 minutos</option>
+                        <option value="ATE_30">De 15 a 30 minutos</option>
+                        <option value="ATE_45">De 30 a 45 minutos</option>
+                        <option value="ATE_60">De 45 minutos a 1 hora</option>
+                        <option value="MAIS_60">Mais de 1 hora</option>
+                    </select>
+                </div>
+            </div>
+            <% } %>
+            <div class="btn-div">
+                <a href="/second-page">Anterior</a>
+                <% if(pass.estudo === '0'){ %>
+                <button>Finalizar</button>
+                <% } else {%>
+                <button>Próximo</button>
+                <% } %>
+            </div>
+            </form>
+            <% if (inputData.error) { %>
+                <p id="error">*Por favor preencha todos os campos corretamente</p>
+                <% } %>
+        </div>
+
+    </main>
+
+</body>
+</html>
